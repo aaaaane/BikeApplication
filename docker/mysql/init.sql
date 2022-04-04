@@ -1,0 +1,13 @@
+CREATE DATABASE IF NOT EXISTS vanmoof;
+
+USE mysql;
+
+CREATE USER 'vanmoof'@'%' IDENTIFIED BY 'secret';
+
+FLUSH PRIVILEGES;
+
+GRANT ALL PRIVILEGES ON *.* TO 'vanmoof'@'%';
+
+FLUSH PRIVILEGES;
+
+USE vanmoof;

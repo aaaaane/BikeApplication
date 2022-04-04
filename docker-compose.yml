@@ -1,0 +1,75 @@
+version: '3.4'
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "9000"
+    command:
+      - "php-fpm"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_DEBUG: 1
+      APP_ENV: local
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - vanmoof-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - vanmoof-network
+
+  #MySQL Service
+  vanmoof-database:
+    image: 'mysql:5.7'
+    container_name: vanmoof-database
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_USER: vanmoof
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: vanmoof
+      MYSQL_USER: vanmoof
+      MYSQL_PASSWORD: secret
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    command: --init-file /init.sql
+    volumes:
+      - ./docker/mysql/init.sql:/init.sql
+      - dbdata:/var/lib/mysql/
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - vanmoof-network
+
+#Docker Networks
+networks:
+  vanmoof-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+
+
