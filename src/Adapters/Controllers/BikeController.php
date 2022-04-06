@@ -55,7 +55,7 @@ final class BikeController
         );
 
         try {
-            $bikeDto = $this->getBikeForUser->forUserId(
+            $bikeDto = $this->getBikeForUser->get(
                 $bikeDtoRequest
             );
         } catch (SorryBikeNotFound) {

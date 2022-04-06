@@ -18,7 +18,7 @@ class GetBikeForUser implements GetBikeForUserPort
     {
     }
 
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
+    public function get(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
     {
 
         $bike = $this->bikeRepository->retrieve(
