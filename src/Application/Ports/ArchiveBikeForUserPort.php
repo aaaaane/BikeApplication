@@ -15,5 +15,5 @@ interface ArchiveBikeForUserPort
      * @throws SorryCannotArchiveBikeBecauseStateIsNotInactive
      * @throws SorryBikeNotFound
      */
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse;
+    public function archive(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse;
 }

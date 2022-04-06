@@ -13,5 +13,5 @@ interface GetBikeForUserPort
     /**
      * @throws SorryBikeNotFound
      */
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse;
+    public function get(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse;
 }

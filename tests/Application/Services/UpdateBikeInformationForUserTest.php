@@ -35,7 +35,7 @@ class UpdateBikeInformationForUserTest extends TestCase
         );
 
         // act
-        $updateBike->forUserId($bikeDtoRequest);
+        $updateBike->update($bikeDtoRequest);
         $storedBike = $bikeRepository->retrieve($bike->getBikeId(), $bike->getUserId());
 
         // assert

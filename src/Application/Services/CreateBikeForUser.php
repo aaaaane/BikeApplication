@@ -20,12 +20,12 @@ class CreateBikeForUser implements CreateBikeForUserPort
     {
     }
 
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
+    public function create(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
     {
         $bike = Bike::withInactiveState(
             new BikeId(Uuid::uuid4()),
             new UserId(Uuid::fromString($bikeDtoRequest->getUserId())),
-            new BikeInformation($bikeDtoRequest->getName(), $bikeDtoRequest->getModel())
+            new BikeInformation('Standard Bike', 1)
         );
 
         $this->bikeRepository->save($bike);

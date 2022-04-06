@@ -25,7 +25,7 @@ class ArchiveBikeForUser implements ArchiveBikeForUserPort
      * @throws SorryCannotArchiveBikeBecauseStateIsNotInactive
      * @throws SorryBikeNotFound
      */
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
+    public function archive(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
     {
         $bike = $this->bikeRepository->retrieve(
             new BikeId(UuidV4::fromString($bikeDtoRequest->getBikeId())),

@@ -20,7 +20,7 @@ class DeleteBikeForUser implements DeleteBikeForUserPort
     {
     }
 
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): void
+    public function delete(BikeDtoRequest $bikeDtoRequest): void
     {
         $bike = $this->bikeRepository->retrieve(
             new BikeId(UuidV4::fromString($bikeDtoRequest->getBikeId())),

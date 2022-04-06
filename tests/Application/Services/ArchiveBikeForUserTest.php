@@ -29,7 +29,7 @@ class ArchiveBikeForUserTest extends TestCase
         $bikeDtoRequest = new BikeDtoRequest($bike->getUserId()->toString(),  $bike->getBikeId()->toString());
 
         // act
-        $bikeDto = $archiveBike->forUserId($bikeDtoRequest);
+        $bikeDto = $archiveBike->archive($bikeDtoRequest);
         $storedBike = $bikeRepository->retrieve($bike->getBikeId(), $bike->getUserId());
 
         // assert
@@ -51,6 +51,6 @@ class ArchiveBikeForUserTest extends TestCase
         $this->expectException(SorryCannotArchiveBikeBecauseStateIsNotInactive::class);
 
         //act
-        $archiveBike->forUserId($bikeDtoRequest);
+        $archiveBike->archive($bikeDtoRequest);
     }
 }

@@ -6,16 +6,16 @@ namespace Vanmoof\Application\Domain;
 
 class BikeInformation
 {
-    public function __construct(private string $name, private int $model)
+    public function __construct(private ?string $name = null, private ?int $model = null)
     {
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getModel(): int
+    public function getModel(): ?int
     {
         return $this->model;
     }

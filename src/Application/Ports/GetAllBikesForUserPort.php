@@ -14,5 +14,5 @@ interface GetAllBikesForUserPort
      * @return BikeDtoResponse[]
      * @throws SorryBikeNotFound
      */
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): array;
+    public function getAll(BikeDtoRequest $bikeDtoRequest): array;
 }

@@ -29,7 +29,7 @@ class DeactivateBikeForUserTest extends TestCase
         $bikeDtoRequest = new BikeDtoRequest($bike->getUserId()->toString(),  $bike->getBikeId()->toString());
 
         // act
-        $bikeDto = $deactivateBike->forUserId($bikeDtoRequest);
+        $bikeDto = $deactivateBike->deactivate($bikeDtoRequest);
         $storedBike = $bikeRepository->retrieve($bike->getBikeId(), $bike->getUserId());
 
         // assert

@@ -27,7 +27,7 @@ class GetAllBikesForUser implements GetAllBikesForUserPort
     /**
      * @return BikeDtoResponse[]
      */
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): array
+    public function getAll(BikeDtoRequest $bikeDtoRequest): array
     {
         $arrayOfBikes = $this->bikeRepository->retrieveAll(new UserId(UuidV4::fromString($bikeDtoRequest->getUserId())));
 

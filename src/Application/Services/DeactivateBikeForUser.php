@@ -18,7 +18,7 @@ class DeactivateBikeForUser implements DeactivateBikeForUserPort
     {
     }
 
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
+    public function deactivate(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
     {
 
         $bike = $this->bikeRepository->retrieve(

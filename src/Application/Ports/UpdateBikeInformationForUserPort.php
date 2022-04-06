@@ -13,5 +13,5 @@ interface UpdateBikeInformationForUserPort
     /**
      * @throws SorryBikeNotFound
      */
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse;
+    public function update(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse;
 }

@@ -21,12 +21,12 @@ class BikeDtoRequest
         return $this->state;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getModel(): int
+    public function getModel(): ?int
     {
         return $this->model;
     }

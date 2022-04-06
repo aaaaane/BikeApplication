@@ -16,6 +16,7 @@ use Vanmoof\Application\Dto\BikeDtoRequest;
 use Vanmoof\Application\Dto\BikeDtoResponse;
 use Vanmoof\Application\Ports\ActivateBikeForUserPort;
 use Vanmoof\Application\Ports\BikeRepository;
+use function PHPUnit\Framework\throwException;
 
 class ActivateBikeForUser implements ActivateBikeForUserPort
 {
@@ -23,9 +24,8 @@ class ActivateBikeForUser implements ActivateBikeForUserPort
     {
     }
 
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
+    public function activate(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
     {
-
         $bike = $this->bikeRepository->retrieve(
             new BikeId(UuidV4::fromString($bikeDtoRequest->getBikeId())),
             new UserId(UuidV4::fromString($bikeDtoRequest->getUserId())),

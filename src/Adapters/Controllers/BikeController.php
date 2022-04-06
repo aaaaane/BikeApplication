@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Vanmoof\Application\Domain\SorryBikeNotFound;
 use Vanmoof\Application\Dto\BikeDtoRequest;
+use Vanmoof\Application\Services\ActivateBikeForUser;
 use Vanmoof\Application\Services\ArchiveBikeForUser;
 use Vanmoof\Application\Services\CreateBikeForUser;
 use Vanmoof\Application\Services\DeactivateBikeForUser;
@@ -18,7 +19,6 @@ use Vanmoof\Application\Services\DeleteBikeForUser;
 use Vanmoof\Application\Services\GetAllBikesForUser;
 use Vanmoof\Application\Services\GetBikeForUser;
 use Vanmoof\Application\Services\UpdateBikeInformationForUser;
-use Webmozart\Assert\Assert;
 
 final class BikeController
 {
@@ -28,7 +28,7 @@ final class BikeController
         private ArchiveBikeForUser           $archiveBikeForUser,
         private DeleteBikeForUser            $deleteBikeForUser,
         private UpdateBikeInformationForUser $updateBikeInformationForUser,
-        private GetBikeForUser               $activateBikeForUser,
+        private ActivateBikeForUser          $activateBikeForUser,
         private DeactivateBikeForUser        $deactivateBikeForUser,
         private GetBikeForUser               $getBikeForUser,
         private GetAllBikesForUser           $getAllBikesForUser,
@@ -80,7 +80,7 @@ final class BikeController
         $bikeDtoRequest = new BikeDtoRequest($userId,);
 
         try {
-            $bikeDtoArray = $this->getAllBikesForUser->forUserId($bikeDtoRequest);
+            $bikeDtoArray = $this->getAllBikesForUser->getAll($bikeDtoRequest);
         } catch (SorryBikeNotFound) {
             return new JsonResponse([], HttpResponse::HTTP_NOT_FOUND);
         }
@@ -112,7 +112,7 @@ final class BikeController
         );
 
         try {
-            $this->deleteBikeForUser->forUserId(
+            $this->deleteBikeForUser->delete(
                 $bikeDtoRequest
             );
         } catch (SorryBikeNotFound) {
@@ -137,7 +137,7 @@ final class BikeController
         $bikeDtoRequest = new BikeDtoRequest($userId, $bikeId,);
 
         try {
-            $bikeDto = $this->activateBikeForUser->forUserId($bikeDtoRequest);
+            $bikeDto = $this->activateBikeForUser->activate($bikeDtoRequest);
         } catch (SorryBikeNotFound) {
             return new JsonResponse([], HttpResponse::HTTP_NOT_FOUND);
         }
@@ -163,7 +163,7 @@ final class BikeController
         );
 
         try {
-            $bikeDto = $this->deactivateBikeForUser->forUserId(
+            $bikeDto = $this->deactivateBikeForUser->deactivate(
                 $bikeDtoRequest
             );
         } catch (SorryBikeNotFound) {
@@ -191,7 +191,7 @@ final class BikeController
         );
 
         try {
-            $bikeDto = $this->archiveBikeForUser->forUserId($bikeDtoRequest);
+            $bikeDto = $this->archiveBikeForUser->archive($bikeDtoRequest);
         } catch (SorryBikeNotFound) {
             return new JsonResponse([], HttpResponse::HTTP_NOT_FOUND);
         }
@@ -213,7 +213,7 @@ final class BikeController
         $bikeDtoRequest = new BikeDtoRequest($userId);
 
         try {
-            $bikeDto = $this->createBikeForUser->forUserId($bikeDtoRequest);
+            $bikeDto = $this->createBikeForUser->create($bikeDtoRequest);
         } catch (SorryBikeNotFound) {
             return new JsonResponse([], HttpResponse::HTTP_NOT_FOUND);
         }
@@ -227,7 +227,7 @@ final class BikeController
         $userId = $request->get('userId');
         $bikeId = $request->get('bikeId');
         $name = $request->get('name');
-        $model = $request->get('model');
+        $model = $request->get('model') !== "" ? (int)$request->get('model') : null;
 
         try {
             $this->dataValidator->validateData($userId, $bikeId, $name, $model);
@@ -238,7 +238,7 @@ final class BikeController
         $bikeDtoRequest = new BikeDtoRequest($userId, $bikeId, $name, $model);
 
         try {
-            $bikeDto = $this->updateBikeInformationForUser->forUserId($bikeDtoRequest);
+            $bikeDto = $this->updateBikeInformationForUser->update($bikeDtoRequest);
         } catch (SorryBikeNotFound) {
             return new JsonResponse([], HttpResponse::HTTP_NOT_FOUND);
         }

@@ -8,6 +8,7 @@ use Tests\Application\Domain\BikeStub;
 use Vanmoof\Application\Domain\Bike;
 use Vanmoof\Application\Domain\BikeId;
 use Vanmoof\Application\Domain\BikeState;
+use Vanmoof\Application\Domain\SorryBikeNotFound;
 use Vanmoof\Application\Domain\UserId;
 use Vanmoof\Application\Dto\BikeDtoRequest;
 use Vanmoof\Application\Services\ActivateBikeForUser;
@@ -26,13 +27,12 @@ class DeleteBikeForUserTest extends TestCase
         $bike = $this->createWithState(BikeState::INACTIVE);
         $bikeRepository->save($bike);
 
-        // act
         $storedBike = $bikeRepository->retrieve($bike->getBikeId(), $bike->getUserId());
-        // assert
         $this->assertInstanceOf(Bike::class, $storedBike);
-        // act
         $bikeRepository->delete($storedBike);
 
+        $this->expectException(SorryBikeNotFound::class);
 
+        $bikeRepository->retrieve($bike->getBikeId(), $bike->getUserId());
     }
 }

@@ -23,17 +23,20 @@ class UpdateBikeInformationForUser implements UpdateBikeInformationForUserPort
     {
     }
 
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
+    public function update(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
     {
         $bike = $this->bikeRepository->retrieve(
             new BikeId(UuidV4::fromString($bikeDtoRequest->getBikeId())),
             new UserId(UuidV4::fromString($bikeDtoRequest->getUserId())),
         );
 
+        $name = $bikeDtoRequest->getName() !== null ? $bikeDtoRequest->getName() : $bike->getBikeInformation()->getName();
+        $model = $bikeDtoRequest->getModel() !== null ? $bikeDtoRequest->getModel() : $bike->getBikeInformation()->getModel();
+
         $bikeUpdated = new Bike(
             $bike->getBikeId(),
             $bike->getUserId(),
-            new BikeInformation($bikeDtoRequest->getName(), $bikeDtoRequest->getModel()),
+            new BikeInformation($name, $model),
             BikeState::from($bike->getState()->value),
         );
 

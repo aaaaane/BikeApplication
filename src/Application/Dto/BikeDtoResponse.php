@@ -12,8 +12,8 @@ class BikeDtoResponse
         private readonly string $bikeId,
         private readonly string $userId,
         private readonly string $state,
-        private readonly string $name,
-        private readonly int $model,
+        private readonly ?string $name = null,
+        private readonly ?int $model = null,
     )
     {
     }
@@ -29,17 +29,11 @@ class BikeDtoResponse
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
-
-    /**
-     * @return int
-     */
+    
     public function getModel(): int
     {
         return $this->model;

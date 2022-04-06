@@ -13,6 +13,6 @@ interface DeleteBikeForUserPort
     /**
      * @throws SorryBikeNotFound
      */
-    public function forUserId(BikeDtoRequest $bikeDtoRequest): void;
+    public function delete(BikeDtoRequest $bikeDtoRequest): void;
 
 }
