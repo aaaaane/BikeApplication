@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-use Vanmoof\Application\Domain\Bike;
-use Vanmoof\Application\Domain\BikeId;
+namespace Vanmoof\Application\Ports;
+
+use Vanmoof\Application\Domain\SorryBikeNotFound;
+use Vanmoof\Application\Dto\BikeDtoRequest;
+use Vanmoof\Application\Dto\BikeDtoResponse;
 
 interface CreateBikeForUserPort
 {
     /**
      * @throws SorryBikeNotFound
      */
-    public function forUserId(UserId $userId, BikeId $bikeId): Bike;
-
+    public function forUserId(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse;
 }

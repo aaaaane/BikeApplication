@@ -2,8 +2,18 @@
 
 declare(strict_types=1);
 
-use Vanmoof\Application\Domain\Bike;
+namespace Vanmoof\Application\Services;
+
+use Ramsey\Uuid\Rfc4122\UuidV4;
 use Vanmoof\Application\Domain\BikeId;
+use Vanmoof\Application\Domain\SorryBikeNotFound;
+use Vanmoof\Application\Domain\SorryCannotArchiveBikeBecauseStateIsNotInactive;
+use Vanmoof\Application\Domain\UserId;
+use Vanmoof\Application\Dto\BikeDtoRequest;
+use Vanmoof\Application\Ports\ArchiveBikeForUserPort;
+use Vanmoof\Application\Ports\BikeRepository;
+use Vanmoof\Application\Dto\BikeDtoResponse;
+use Webmozart\Assert\Assert;
 
 class ArchiveBikeForUser implements ArchiveBikeForUserPort
 {
@@ -11,16 +21,20 @@ class ArchiveBikeForUser implements ArchiveBikeForUserPort
     {
     }
 
-    public function forUserId(UserId $userId, BikeId $bikeId): Bike
+    /**
+     * @throws SorryCannotArchiveBikeBecauseStateIsNotInactive
+     * @throws SorryBikeNotFound
+     */
+    public function forUserId(BikeDtoRequest $bikeDtoRequest): BikeDtoResponse
     {
-        $bike = $this->bikeRepository->retrieve($bikeId, $userId);
+        $bike = $this->bikeRepository->retrieve(
+            new BikeId(UuidV4::fromString($bikeDtoRequest->getBikeId())),
+            new UserId(UuidV4::fromString($bikeDtoRequest->getUserId())),
+        );
 
+        $bike->archive();
+        $this->bikeRepository->save($bike);
 
-        // mirar si la bici existeix a la bbdd
-        // mirar si l'usuari te permis per executar aixo
-        // agafar la bici del port del repositori
-        // mutar l'estat de la bici
-        // guardar
-        // retornar la bici
+        return BikeDtoResponse::fromBike($bike);
     }
 }

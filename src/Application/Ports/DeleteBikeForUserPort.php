@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
+namespace Vanmoof\Application\Ports;
+
 use Vanmoof\Application\Domain\Bike;
-use Vanmoof\Application\Domain\BikeId;
+use Vanmoof\Application\Domain\SorryBikeNotFound;
+use Vanmoof\Application\Dto\BikeDtoRequest;
 
 interface DeleteBikeForUserPort
 {
     /**
      * @throws SorryBikeNotFound
      */
-    public function forUserId(UserId $userId, BikeId $bikeId): Bike;
+    public function forUserId(BikeDtoRequest $bikeDtoRequest): void;
 
 }

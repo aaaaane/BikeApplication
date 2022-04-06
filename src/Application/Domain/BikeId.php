@@ -12,6 +12,11 @@ class BikeId
     {
     }
 
+    public static function createFromString(string $bikeId)
+    {
+
+    }
+
     public function toString(): string
     {
         return $this->bikeId->toString();

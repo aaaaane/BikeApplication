@@ -6,7 +6,7 @@ namespace Vanmoof\Application\Domain;
 
 use Exception;
 
-class SorryCannotArchiveBikeBecauseStateIsNotInactive extends Exception
+class SorryCannotDeactivateBikeBecauseBikeStateIsInactive extends Exception
 {
 
 }

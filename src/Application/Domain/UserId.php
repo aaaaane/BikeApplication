@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Vanmoof\Application\Domain;
+
 use Ramsey\Uuid\UuidInterface;
 
 class UserId

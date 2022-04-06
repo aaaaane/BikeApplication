@@ -8,5 +8,4 @@ enum BikeState: string
     case ACTIVE = 'active';
     case INACTIVE = 'inactive';
     case ARCHIVED = 'archived';
-
 }

@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace Vanmoof\Application\Domain;
 
+use http\Env\Request;
+
 class Bike
 {
-//    private UserId $userId;
-    private BikeState $bikeState;
-    private BikeId $bikeId;
-//    private BikeInformation $bikeInformation;
+    public function __construct(private BikeId $bikeId, private UserId $userId, private BikeInformation $bikeInformation, private BikeState $bikeState,)
+    {
+    }
 
-//    public function getUserId(): UserId
-//    {
-//        return $this->userId;
-//    }
+    public static function withInactiveState(BikeId $bikeId, UserId $userId, BikeInformation $bikeInformation): self
+    {
+        return new self($bikeId , $userId, $bikeInformation, BikeState::INACTIVE);
+    }
+
+    public function getUserId(): UserId
+    {
+        return $this->userId;
+    }
 
     public function getState(): BikeState
     {
@@ -26,10 +32,10 @@ class Bike
         return $this->bikeId;
     }
 
-//    public function getBikeInformation(): BikeInformation
-//    {
-//        return $this->bikeInformation;
-//    }
+    public function getBikeInformation(): BikeInformation
+    {
+        return $this->bikeInformation;
+    }
 
     public function activate(): void
     {
@@ -43,6 +49,7 @@ class Bike
 
     /**
      * @throws SorryCannotArchiveBikeBecauseStateIsNotInactive
+     * @NOTE: this is an invariant
      */
     public function archive(): void
     {
