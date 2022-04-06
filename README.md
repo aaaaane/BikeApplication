@@ -15,7 +15,7 @@ The architecture chosen for developing this project is the **Hexagonal** one.
 *Why did I made this choice?*
 The answer is pretty easy; it respects the S.O.L.I.D. principles and allows to separate the different layers of the application.
 
-I've structured my project using different adapters for the driving side to communicate via ports with the domain, and ports on the application that communicate with the driven side via ports on the application isolating the domain of the application.
+I've structured my project using different *adapters* for the *driving side* to communicate via *ports* with the *application*, and *ports on the application* that communicate with the *driven side* via *ports on the application* isolating the *domain* of the application.
 
 ![img.png](img.png)
 
@@ -23,9 +23,13 @@ As a primary adapter I created one controller (`BikeApplication/src/Adapters/Con
 
 This controller instantiates every service and calls the method on them for doing the desired action. In every function I made a validation of the input data from the `request` for making sure no incorrect data is introduced. If the data type doesn't match the desired one it throws an `exception`.
 
-`BikeController` calls the function on the service passing a `DTO` with the desired data for assure scalability. It uses the secondary adapter (`BikeApplication/src/Adapters/Repositories/DoctrineBikeRepository.php`) for performing the desired actions on the external actors (driven side); in this case would be persisting the data on the database.
+`BikeController` calls the function on the service passing a `DTO` with the desired data for assure scalability and *guarding the data types*. It uses the secondary adapter (`BikeApplication/src/Adapters/Repositories/DoctrineBikeRepository.php`) for performing the desired actions on the external actors (driven side); in this case would be persisting the data on the database.
 
 Once the desired actions are done, the service returns another `DTO` with the desired data for the controller, isolating completely the `Domain` part of the application.
+
+Tests
+-----
+Tests can be found on `BikeApplication/tests/Application/Services`. I only tested the services for making sure they do the desired actions.
 
 
 Setup of the project
