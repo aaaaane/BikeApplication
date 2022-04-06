@@ -1,12 +1,15 @@
-#Bike Application
-##About the project
+Bike Application
+=================
+About the project
+-----------------
 
 This project is about to build an application based on an API REST for a bike store.
 
 The user is able to *create, update the information, delete and update the state (activate, deactivate and archive)* as well as *retrieving the information for one bike and for all the user's bikes*.
 
 
-##Chosen architecture
+Chosen architecture
+-------------------
 The architecture chosen for developing this project is the **Hexagonal** one.
 
 *Why did I made this choice?*
@@ -25,7 +28,8 @@ This controller instantiates every service and calls the method on them for doin
 Once the desired actions are done, the service returns another `DTO` with the desired data for the controller, isolating completely the `Domain` part of the application.
 
 
-##Setup of the project
+Setup of the project
+--------------------
 **Requirements**: Docker Application
 
 To install it first you need to clone the repository in your local machine:
@@ -43,7 +47,8 @@ Once the query finishes, run:
 docker-compose exec app composer install
 ```
 
-##Utilities
+Utilities
+---------
 
 For better usage of the API I've created a Postman Collection:
 ```
