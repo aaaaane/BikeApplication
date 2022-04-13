@@ -51,6 +51,11 @@ Once the query finishes, run:
 docker-compose exec app composer install
 ```
 
+Start the containers:
+```
+docker-compose up -d
+```
+
 Utilities
 ---------
 
